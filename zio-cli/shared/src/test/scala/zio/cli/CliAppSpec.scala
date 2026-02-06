@@ -55,7 +55,7 @@ object CliAppSpec extends ZIOSpecDefault {
       summary = HelpDoc.Span.text("test"),
       command = cmd,
       config = config
-    ) { input => ZIO.succeed(input) }
+    )(input => ZIO.succeed(input))
 
     suite("unrecognized arguments")(
       test("should fail with non-zero exit code when extra arguments are provided") {
