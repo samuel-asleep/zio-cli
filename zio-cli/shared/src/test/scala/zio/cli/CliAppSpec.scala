@@ -34,9 +34,10 @@ object CliAppSpec extends ZIOSpecDefault {
         assertZIO(result)(succeeds(anything))
       },
       test("should exit with a code <> 0 when the parsing of the command fails") {
-        val result = app().run(List("make", "this is not an integer")).exit
+        val invalidArgument = "this is not an integer"
+        val result          = app().run(List("make", invalidArgument)).exit
 
-        assertZIO(result)(fails(anything))
+        assertZIO(result)(fails(hasMessage(containsString(invalidArgument))))
       },
       test("should exit with a code <> 0 when the command fails") {
         val result = app(behavior = ZIO.fail(new RuntimeException("Boom"))).run(List("make", "1")).exit
